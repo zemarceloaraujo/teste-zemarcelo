@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Teste Manter Pessoa</title>
+</h:head>
+<h:body>
+
+	<h:form id="formInclusao">
+		
+		<p:panelGrid columns="8">
+			
+			<p:outputLabel value="Nome"/>
+			<p:inputText value="#{pessoaController.pessoaDTO.nome}"></p:inputText>
+			<p:outputLabel value="Idade"/>
+			<p:calendar id="ida" value="#{pessoaController.pessoaDTO.idade}" />
+			<p:outputLabel value="Sexo"/>
+			<p:selectOneMenu value="#{pessoaController.pessoaDTO.sexo}" >
+				<f:selectItem itemLabel="" itemValue="" />
+           		<f:selectItem itemLabel="Masculino" itemValue="m" />
+           		<f:selectItem itemLabel="Feminino" itemValue="f" />
+			</p:selectOneMenu>
+			
+		
+		</p:panelGrid>
+		
+		<hr></hr>
+		
+		<p:panelGrid columns="6">
+			
+			<p:outputLabel value="Cidade"/>
+			<p:inputText value="#{pessoaController.enderecoDTO.cidade}"></p:inputText>
+			<p:outputLabel value="Logradouro"/>
+			<p:inputText value="#{pessoaController.enderecoDTO.logradouro}"></p:inputText>
+			<p:outputLabel value="Cep"/>
+			<p:inputText value="#{pessoaController.enderecoDTO.cep}" maxlength="8"></p:inputText>
+		
+		</p:panelGrid>
+
+		
+		<p:panelGrid columns="4">
+							
+			<p:outputLabel value="Número"/>
+			<p:inputText value="#{pessoaController.enderecoDTO.numero}"></p:inputText>
+			<p:outputLabel value="Estado"/>
+			<p:selectOneMenu value="#{pessoaController.enderecoDTO.estado}" >
+				<f:selectItem itemLabel="" itemValue="" />
+           		<f:selectItems value="#{pessoaController.listarSigla()}" var="sigla" itemLabel="#{sigla}" itemValue="#{sigla}" />
+			</p:selectOneMenu>
+					
+		</p:panelGrid>
+		
+		<p:panelGrid>                                          
+			<p:commandButton value="Adcionar Endereço" action="#{pessoaController.adicionarEndereco()}" update="formInclusao"></p:commandButton>
+		</p:panelGrid>
+		
+		<hr></hr>
+		
+		<p:dataTable id="listaEnd" value="#{pessoaController.listaEndereco}" var="end">
+			 <f:facet name="header">
+	            Lista de Pessoas
+	        </f:facet>
+			<p:column headerText="Ações" style="width:51px;">
+				<p:commandLink id="acaoAlterarEnd" action="#{pessoaController.alterarEndereco(end)}"><img src="imagem/lapis.png" style="width: 20px; height: 20px" alt="Alterar"/> <f:ajax render="@form"/></p:commandLink>
+				<p:commandLink  id="acaoRemoverEnd" action="#{pessoaController.removerEndereco(end)}"><img src="imagem/lixeira.png" style="width: 20px; height: 20px" alt="Remover"/> <f:ajax render="@form"/></p:commandLink>
+			</p:column>
+			<p:column headerText="Cidade">
+				<h:outputText value="#{end.cidade}"/>
+			</p:column>
+			<p:column headerText="Logradouro">
+				<h:outputText value="#{end.logradouro}"/>
+			</p:column>
+			<p:column headerText="CEP">
+				<h:outputText value="#{end.cep}"/>
+			</p:column>
+			<p:column headerText="Número">
+				<h:outputText value="#{end.numero}"/>
+			</p:column>
+			<p:column headerText="Estado">
+				<h:outputText value="#{end.estado}"/>
+			</p:column>
+		</p:dataTable>
+		
+		<p:panelGrid>
+			<p:commandButton value="Salvar Pessoa" action="#{pessoaController.inserir()}"> <f:ajax render="@form"/></p:commandButton>
+		</p:panelGrid>
+		
+		<hr></hr>
+
+	<hr></hr>
+	
+		
+		
+		<p:dataTable id="listPessoa" value="#{pessoaController.listarPessoa()}" var="pess">
+			 <f:facet name="header">
+	            Lista de Endereços
+	        </f:facet>
+			<p:column headerText="Ações" style="width:51px;">
+				<p:commandLink id="acaoAlterarPess" action="#{pessoaController.alterarPessoa(pess)}" immediate="true" update="@this"><img src="imagem/lapis.png" style="width: 20px; height: 20px" alt="Alterar"/> <f:ajax render="@form"/></p:commandLink>
+				<p:commandLink id="acaoRemoverPess" action="#{pessoaController.removerPessoa(pess)}" immediate="true" update="listPessoa"><img src="imagem/lixeira.png" style="width: 20px; height: 20px" alt="Remover"/> <f:ajax render="@form"/></p:commandLink>
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{pess.nome}"/>
+			</p:column>
+			<p:column headerText="Idade">
+				<h:outputText value="#{pess.idade}"/>
+			</p:column>
+			<p:column headerText="Sexo">
+				<h:outputText value="#{pess.sexo}"/>
+			</p:column>
+		</p:dataTable>
+	
+	</h:form>
+	
+</h:body>
+</html>

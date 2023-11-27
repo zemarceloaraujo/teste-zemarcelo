@@ -1,0 +1,60 @@
+Este projeto é um teste
+
+trata-se de um projeto do tipo Maven, executado sobre o servidor web Tomcat v9.0 e servidor de banco de dados Postgres versão 15.5-1
+
+Contém as seguintes tecnologias:
+
+1 - JSF 2.1.13
+2 - Spring 3.1.2
+3 - JPA
+4 - Primefaces 8
+
+
+para utilizá-lo, basta executar os seguintes passos:
+
+1 - baixar o arquivo zip;
+2 - executar os seguintes script sql, para criar a base:
+
+	CREATE TABLE mantem_pessoa.pessoa (
+	
+		id int ,
+		nome varchar(150),
+		idade date,
+		sexo  varchar(2),
+		primary key (id)
+	);
+	
+	
+	CREATE TABLE mantem_pessoa.endereco (
+	
+		id int,
+		estado varchar(2),
+		cidade varchar(100),
+		logradouro varchar(100),
+		numero int,
+		cep varchar(8),
+		id_pessoa int,
+		primary key (id),
+		foreign key (id_pessoa) references mantem_pessoa.pessoa
+	);
+	
+	create sequence sequencial_pessoa
+	START 1
+	INCREMENT 1;
+	
+	create sequence sequencial_endereco
+	START 1
+	INCREMENT 1;
+
+3 - importar o projeto utilizando a ferramenta eclipse;
+4 - adicionar o projeto ao servidor web configurado no eclipse;
+5 - subir o servidor.
+
+O projeto só contém um página de teste do CRUD.
+
+Abrir a página já executa a listagem das pessoas, para inserir preencher os campos vinculados ao objeto pessoa, adicionar um ou mais endereço 
+vinculado à pessoa e clicar no botão salvar pessoa.
+
+Cada lista na página contém um botão para editar ou remover o arquivo.
+
+
